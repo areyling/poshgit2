@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-using System.Threading.Tasks;
 
 namespace PoshGit2
 {
@@ -8,18 +7,11 @@ namespace PoshGit2
     {
         public IStatusWriter Writer { get; set; }
 
-        public Task<IRepositoryStatus> Status { get; set; }
-
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
 
-            var status = Status.Result;
-
-            if (status != null)
-            {
-                Writer.WriteStatus(status);
-            }
+            Writer.WriteStatusAsync().Wait();
         }
     }
 }

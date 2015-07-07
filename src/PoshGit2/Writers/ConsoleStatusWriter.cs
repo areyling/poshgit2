@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PoshGit2.Writers
 {
     public class ConsoleStatusWriter : IStatusWriter
     {
         private readonly IGitPromptSettings _settings;
+        private readonly Task<IRepositoryStatus> _status;
 
-        public ConsoleStatusWriter(IGitPromptSettings settings)
+        public ConsoleStatusWriter(IGitPromptSettings settings, Task<IRepositoryStatus> status)
         {
             _settings = settings;
+            _status = status;
         }
 
-        public void WriteStatus(IRepositoryStatus status)
+        public async Task WriteStatusAsync()
         {
             if (!_settings.EnablePromptStatus)
             {
                 return;
             }
+
+            var status = await _status;
 
             WriteColor(_settings.BeforeText, _settings.Before);
 

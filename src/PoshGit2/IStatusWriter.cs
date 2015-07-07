@@ -1,7 +1,9 @@
-﻿namespace PoshGit2
+﻿using System.Threading.Tasks;
+
+namespace PoshGit2
 {
     public interface IStatusWriter
     {
-        void WriteStatus(IRepositoryStatus status);
+        Task WriteStatusAsync();
     }
 }
